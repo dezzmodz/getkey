@@ -8,65 +8,133 @@
 <style>
   :root{
     --bg-1:#0b1116; --bg-2:#0f1a21; --accent:#7dff7d; --card:rgba(0,0,0,0.55);
+    --glass: rgba(255,255,255,0.04);
   }
-
   html,body{height:100%;margin:0;font-family:'Orbitron',sans-serif;background:linear-gradient(135deg,var(--bg-1),var(--bg-2));color:var(--accent);transition:background 800ms ease}
   .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px}
   .card{width:100%;max-width:1100px;min-height:78vh;border-radius:16px;padding:18px;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.55));border:2px solid rgba(127,255,150,0.06);box-shadow:0 12px 60px rgba(0,0,0,0.6);display:grid;grid-template-columns:1fr 360px;gap:16px;backdrop-filter: blur(4px)}
   @media (max-width:900px){.card{grid-template-columns:1fr;min-height:100vh;border-radius:10px}}
   h1{margin:0;font-size:22px}
-  .key-display{margin-top:12px;padding:20px;border-radius:12px;background:var(--card);font-size:20px;font-weight:800;min-height:110px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;flex-direction:column;color:var(--accent)}
+  .key-display{margin-top:12px;padding:20px;border-radius:12px;background:var(--card);font-size:20px;font-weight:800;min-height:140px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;flex-direction:column;color:var(--accent)}
   .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
   button,.btn{background:var(--accent);color:#000;border:0;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.4)}
   .btn-ghost{background:transparent;border:1px solid rgba(127,255,150,0.08);color:var(--accent);backdrop-filter: blur(2px)}
   .progress-bar{width:100%;height:12px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;margin-top:14px}
   .progress-fill{height:100%;width:0%;background:linear-gradient(90deg, rgba(255,255,255,0.06), var(--accent));transition:width 250ms linear;box-shadow:0 6px 20px rgba(0,0,0,0.5)}
   .note{font-size:13px;opacity:0.95;margin-top:8px}
-  .login-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);display:flex;align-items:center;justify-content:center;z-index:9999}
-  .login-card{background:linear-gradient(180deg,#071015,#0a1a22);padding:18px;border-radius:12px;border:1px solid rgba(127,255,150,0.06);width:360px;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
-  input[type=password]{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--accent);box-sizing:border-box}
-  .small{font-size:13px;opacity:0.85}
-  .links a{display:inline-block;margin:6px;padding:8px 10px;border-radius:8px;background:rgba(0,255,150,0.06);color:var(--accent);text-decoration:none}
   .toprow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   .logout{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);padding:8px;border-radius:8px}
-  .disabled{opacity:0.5;pointer-events:none}
+  .small{font-size:13px;opacity:0.85}
+  .links a{display:inline-block;margin:6px;padding:8px 10px;border-radius:8px;background:rgba(0,255,150,0.06);color:var(--accent);text-decoration:none}
   .admin-note{font-size:12px;opacity:0.85;margin-top:8px}
-  /* Neon popup */
   .modal-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:10000;pointer-events:none}
   .modal{min-width:320px;max-width:780px;background:linear-gradient(180deg,rgba(0,0,0,0.75),rgba(0,0,0,0.5));border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 20px 60px rgba(0,0,0,0.6);transform:scale(.9);opacity:0;transition:all 240ms ease;pointer-events:auto}
   .modal.show{transform:scale(1);opacity:1}
   .neon-title{font-size:18px;font-weight:800;text-align:center;color:var(--accent);text-shadow:0 0 12px rgba(0,255,150,0.18),0 0 30px rgba(0,255,150,0.08)}
-  .modal-key{font-family:monospace;margin:14px 0;padding:12px;border-radius:10px;background:rgba(0,0,0,0.35);text-align:center;font-size:18px;color:#000;background:linear-gradient(90deg,#bfffbf,var(--accent));box-shadow:0 6px 30px rgba(0,255,150,0.08)}
+  .modal-key{font-family:monospace;margin:14px 0;padding:12px;border-radius:10px;background:linear-gradient(90deg,#bfffbf,var(--accent));text-align:center;font-size:18px;color:#000;box-shadow:0 6px 30px rgba(0,255,150,0.08)}
   .modal-meta{font-size:13px;opacity:0.85;text-align:center;margin-top:6px}
   .neon-glow{box-shadow:0 6px 28px rgba(0,255,150,0.12), 0 0 80px rgba(0,255,150,0.06)}
-  /* small helpers */
   .flex-center{display:flex;align-items:center;gap:8px}
+
+  /* neon clock top-right */
+  .neon-clock { font-family: 'Orbitron', sans-serif; font-weight:700; font-size:14px; color:var(--accent);
+    text-shadow:0 0 6px rgba(125,255,125,0.9),0 0 12px rgba(125,255,125,0.6),0 0 20px rgba(125,255,125,0.35); opacity:0.95; white-space:nowrap; pointer-events:none;}
+  #clockTopWrap { position: fixed; top: 12px; right: 18px; z-index:12000; display:flex; align-items:center; gap:10px; }
+
+  /* login neon-glass */
+  .login-overlay{position:fixed;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.7));display:flex;align-items:center;justify-content:center;z-index:9999}
+  .login-card{
+    width:360px;padding:18px;border-radius:14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    border:1px solid rgba(127,255,150,0.06);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px) saturate(1.1);
+    position:relative; overflow:hidden;
+  }
+  .login-card::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background: linear-gradient(90deg, rgba(127,255,150,0.02), rgba(127,255,150,0.005));
+    mix-blend-mode: overlay;
+  }
+  .login-title{display:flex;align-items:center;gap:10px}
+  .glass-input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.16);color:var(--accent);box-sizing:border-box;font-weight:700}
+  .login-note{font-size:13px;opacity:0.9;margin-top:8px}
+
+  /* neon blinking copy button */
+  .btn-copy {
+    position:relative;
+    overflow:visible;
+    transition:transform .12s ease;
+    box-shadow: 0 8px 30px rgba(125,255,125,0.08);
+  }
+  .btn-copy::after{
+    content:"";
+    position:absolute; inset:0; border-radius:10px;
+    box-shadow: 0 0 10px rgba(125,255,125,0.45), 0 0 30px rgba(125,255,125,0.25), 0 0 60px rgba(125,255,125,0.06);
+    filter: blur(6px);
+    opacity:0.0;
+    animation: copy-glow 2s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes copy-glow{
+    0% { opacity:0.0; transform: scale(0.98); }
+    20% { opacity:0.65; transform: scale(1.01); }
+    50% { opacity:0.95; transform: scale(1.03); }
+    80% { opacity:0.65; transform: scale(1.01); }
+    100% { opacity:0.0; transform: scale(0.98); }
+  }
+
+  /* strong blink when active (fast) */
+  .btn-copy.blink::after{
+    animation: copy-glow-fast 0.9s linear infinite;
+  }
+  @keyframes copy-glow-fast{
+    0%{ opacity:0.0; transform:scale(0.98) }
+    20%{ opacity:0.9; transform:scale(1.06) }
+    50%{ opacity:1.0; transform:scale(1.08) }
+    80%{ opacity:0.9; transform:scale(1.06) }
+    100%{ opacity:0.0; transform:scale(0.98) }
+  }
+
+  /* disabled visual */
+  .disabled { opacity:0.45; pointer-events:none; filter:grayscale(0.2); }
+
+  /* small helpers */
+  .note-strong{font-weight:800;font-size:12px}
 </style>
 </head>
 <body>
+
+  <!-- NEON CLOCK TOP RIGHT -->
+  <div id="clockTopWrap">
+    <div id="clockNeonTop" class="neon-clock">--</div>
+  </div>
+
   <div class="wrap">
     <div class="card" role="main">
       <div>
         <div class="toprow">
-          <h1>𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎 — Premium Key</h1>
-          <div style="margin-left:auto">
-            <button id="logoutBtn" class="logout" style="display:none">Logout</button>
-          </div>
+          <h1>𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎 V.1.1.1.1 ᴜɴʟɪᴍɪᴛᴇᴅ ᴇᴅɪᴛɪᴏɴ</h1>
+          <div style="margin-left:auto"><button id="logoutBtn" class="logout" style="display:none">Logout</button></div>
         </div>
 
         <p class="small">Versi Premium — key tampil <strong>1 jam</strong>. Tekan <em>GET KEY (Premium)</em> untuk generate.</p>
 
         <div id="keyDisplay" class="key-display">
           <div id="keyText">SILAHKAN KLIK GET KEY</div>
+
           <div class="progress-bar" style="width:90%">
             <div id="progressFill" class="progress-fill" style="width:0%"></div>
           </div>
+
           <div id="timeNote" class="note"></div>
+
+          <div style="margin-top:12px" class="note-strong" id="liveExpireNote"></div>
         </div>
 
         <div class="controls">
           <button id="pickBtn">GET KEY (Premium)</button>
-          <button id="copyBtn">COPY</button>
+          <button id="copyBtn" class="btn-copy">COPY</button>
           <button id="shareBtn">SHARE</button>
           <button id="qrBtn" class="btn-ghost">QR</button>
         </div>
@@ -75,7 +143,6 @@
           <img id="qrImg" src="" alt="QR code" style="width:160px;height:160px;border-radius:10px;background:#fff;padding:6px">
           <div style="margin-top:8px"><a id="qrDownload" class="btn-ghost" download="key-qr.png">Download QR</a></div>
         </div>
-
       </div>
 
       <div>
@@ -93,11 +160,11 @@
 
         <label style="margin-top:12px;display:block">📣 Sosial</label>
         <div class="links">
-          <a href="https://lynk.id/dezzreal" target="_blank">Produk</a>
-          <a href="https://youtube.com/@trioshorts145?si=4sL0IFJR2DZq6DR0" target="_blank">YouTube</a>
-          <a href="https://t.me/addlist/zNLRBwRsPOQ3OTZl" target="_blank">Telegram</a>
-          <a href="https://sociabuzz.com/dezzreal" target="_blank">Sociabuzz</a>
-          <a href="https://whatsapp.com/channel/0029Vb7Gl23EFeXuLGF1yB1G" target="_blank">WhatsApp</a>
+          <a href="#" target="_blank">Produk</a>
+          <a href="#" target="_blank">YouTube</a>
+          <a href="#" target="_blank">Telegram</a>
+          <a href="#" target="_blank">Sociabuzz</a>
+          <a href="#" target="_blank">WhatsApp</a>
         </div>
 
         <div style="margin-top:12px" class="small">History (local): <span id="historyList">—</span></div>
@@ -106,21 +173,34 @@
     </div>
   </div>
 
-  <!-- LOGIN OVERLAY -->
+  <!-- LOGIN OVERLAY (neon-glass) -->
   <div id="loginOverlay" class="login-overlay" style="display:none">
     <div class="login-card">
-      <h3 style="margin:0 0 8px">🔒 Premium Login</h3>
-      <p class="small" style="margin:0 0 12px">Masukkan PIN atau gunakan fingerprint (jika tersedia).</p>
-      <input id="pinInput" type="password" placeholder="Masukkan PIN" />
-      <div style="display:flex;gap:8px;margin-top:10px">
-        <button id="pinSubmit">KIRIM PIN</button>
-        <button id="useFingerprint" class="btn-ghost">Fingerprint</button>
+      <div class="login-title">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" style="filter: drop-shadow(0 6px 18px rgba(125,255,125,0.08));">
+          <path d="M6 10v4h12v-4" stroke="rgba(125,255,125,0.9)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="7" y="4" width="10" height="6" rx="2" stroke="rgba(125,255,125,0.9)" stroke-width="1.6" />
+        </svg>
+        <div>
+          <div style="font-weight:800">🔒 Premium Login</div>
+          <div class="login-note small">Masukkan PIN untuk akses premium (contoh: AAAAAA1)</div>
+        </div>
       </div>
+
+      <div style="margin-top:12px">
+        <input id="pinInput" class="glass-input" type="password" placeholder="Masukkan PIN" />
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button id="pinSubmit" class="btn">LOGIN</button>
+        <button id="pinCancel" class="btn-ghost">Batal</button>
+      </div>
+
       <div id="loginMsg" class="small" style="color:#ff6b6b;margin-top:8px;display:none"></div>
     </div>
   </div>
 
-  <!-- Neon Modal (success) -->
+  <!-- MODAL -->
   <div id="modalWrap" class="modal-wrap" aria-hidden="true" style="display:none">
     <div id="modal" class="modal neon-glow">
       <div class="neon-title" id="modalTitle">KEY GENERATED</div>
@@ -133,51 +213,37 @@
     </div>
   </div>
 
+  <!-- bottom neon clock -->
+  <div id="clockBottom" style="position:fixed;bottom:10px;left:50%;transform:translateX(-50%);pointer-events:none;z-index:12000">
+    <div class="neon-clock" id="clockNeonBottom">--</div>
+  </div>
+
 <script>
-/* =========================
-   Configuration & Pins
-   ========================= */
-
-/* Multi-PIN list (hashes + expires + plain pin for admin reference) */
-const PINS_SOURCE = [
-{ "hash": "98609a6903b595753f0717e4521c4c2f3d02c5776175511cd198963d14c6f6af", "expires": "2025-11-22 14:10", "pin": "woiii1" },
-{ "hash": "8107d321db0a81cc0cde289796e14a8026772fa82ae0c15e85d34519428d1e90", "expires": "2025-11-22 14:10", "pin": "woiii2" },
-{ "hash": "a0091d9b9d4ddaf97dbe856f72ece45a18a599c111ea40d25141bfccf6fd358a", "expires": "2025-11-22 14:10", "pin": "woiii3" },
-{ "hash": "33265d844babf832a60d80686f611d8e3f0e43d992171a882ed3a610c4ceb68f", "expires": "2025-11-22 14:10", "pin": "woiii4" },
-{ "hash": "3618889cc265a53ae578c957a185c397dbd2abb250add3c60ef5a566a00f97c2", "expires": "2025-11-23 13:17", "pin": "VIP 1DAY1" },
-{ "hash": "401387bc95e6ba5da5041a49ea72c83a05da814bbee9fc858ba4fef6a4e7ce15", "expires": "2025-12-30 23:59", "pin": "VIP 1BULAN1" }
- ];
-
-const DURATION_SECONDS = 3600; // key visible 1 hour
-const MAX_BAD = 3;
-const LOCAL_PINS_KEY = 'dz_pins_active';
-
-/* keys pool (example keys) */
-const keys = [
-"King_Cheats_SGKC2IART",
-"King_Cheats_MEBXUR12M", 
-"King_Cheats_5HJNJX7FG", 
-"King_Cheat_P4A1KRM2X", 
-"King_Cheats_QG5F2UPI1", 
-"King_Cheats_EQM3QLX0C", 
-"King_Cheats_I70ABKHK5", 
-"King_Cheats_DDMLEKRQ3", 
-"King_Cheats_H86OEGVRL", 
-"King_Cheats_8B885L8EZ", 
-"King_Cheats_FIZRAET43", 
-"GRINGO-6701446", 
-"GOD-X-MODS-ORZKA-12H", 
-"GOD-X-MODS-MQBFD-12H", 
-"GOD-X-MODS-FIUJZ-12H"
+/* ========== Simple config ========== */
+const VALID_PINS = ["GGFFNO1","GGFFNO2","GGFFNO3","IMUT111","11111111"];
+const DURATION_SECONDS = 3600; // 1 jam
+const KEYS_POOL = [
+  "King_Cheats_SGKC2IART","King_Cheats_MEBXUR12M","King_Cheats_5HJNJX7FG",
+  "King_Cheats_CYCHM7G1D", 
+  "King_Cheats_7PZ7NSTIT", 
+  "King_Cheats_6WHDQ6CDK", 
+  "King_Cheats_8GYFYAP8K", 
+  "King_Cheats_5QM0BNAPY", 
+  "King_Cheats_QCKICVQQO", 
+  "King_Cheats_08JO8O8EU",
+  "King_Cheat_P4A1KRM2X",
+  "King_Cheats_QG5F2UPI1",
+  "King_Cheats_EQM3QLX0C",
+  "King_Cheats_I70ABKHK5","King_Cheats_DDMLEKRQ3","King_Cheats_H86OEGVRL",
+  "King_Cheats_8B885L8EZ","King_Cheats_FIZRAET43","GRINGO-6701446",
+  "GOD-X-MODS-ORZKA-12H","GOD-X-MODS-MQBFD-12H","GOD-X-MODS-FIUJZ-12H"
 ];
 
-/* =========================
-   Elements
-   ========================= */
+/* ========== Elements ========== */
 const loginOverlay = document.getElementById('loginOverlay');
 const pinInput = document.getElementById('pinInput');
 const pinSubmit = document.getElementById('pinSubmit');
-const useFingerprint = document.getElementById('useFingerprint');
+const pinCancel = document.getElementById('pinCancel');
 const loginMsg = document.getElementById('loginMsg');
 const pickBtn = document.getElementById('pickBtn');
 const copyBtn = document.getElementById('copyBtn');
@@ -192,7 +258,6 @@ const timeNote = document.getElementById('timeNote');
 const historyList = document.getElementById('historyList');
 const logoutBtn = document.getElementById('logoutBtn');
 const themeSel = document.getElementById('themeSel');
-
 const modalWrap = document.getElementById('modalWrap');
 const modal = document.getElementById('modal');
 const modalKey = document.getElementById('modalKey');
@@ -200,200 +265,40 @@ const modalMeta = document.getElementById('modalMeta');
 const modalTitle = document.getElementById('modalTitle');
 const modalClose = document.getElementById('modalClose');
 const modalCopy = document.getElementById('modalCopy');
+const liveExpireNote = document.getElementById('liveExpireNote');
+const clockTop = document.getElementById('clockNeonTop');
+const clockBottom = document.getElementById('clockNeonBottom');
 
-/* state */
 let lastKey = "";
-let countdownTimer = null;
-let expireTimer = null;
+let expiryAt = 0;
+let countdownInterval = null;
 
-/* =========================
-   Utility functions
-   ========================= */
-async function sha256(message){
-  const data = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2,'0')).join('');
+/* ========== Auth (session) ========== */
+function isAuthorized(){ return sessionStorage.getItem('dz_authorized') === '1'; }
+function setAuthorized(flag){
+  if(flag) sessionStorage.setItem('dz_authorized','1'); else sessionStorage.removeItem('dz_authorized');
+  loginOverlay.style.display = flag ? 'none' : 'flex';
+  logoutBtn.style.display = flag ? 'inline-block' : 'none';
 }
-function nowTime(){ return Date.now(); }
-function parseExpiry(expStr){
-  // Accept "YYYY-MM-DD HH:mm" or "YYYY-MM-DDTHH:mm"
-  const t = expStr.trim().replace(' ', 'T');
-  return new Date(t);
-}
-function formatTimeLeft(sec){
-  const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60;
-  if(h>0) return `${h}h ${m}m ${s}s`;
-  if(m>0) return `${m}m ${s}s`;
-  return `${s}s`;
-}
+setAuthorized(isAuthorized());
 
-/* =========================
-   PIN storage / cleanup
-   ========================= */
-function loadPinsFromStorage(){
-  try{
-    const raw = localStorage.getItem(LOCAL_PINS_KEY);
-    if(!raw) return null;
-    const parsed = JSON.parse(raw);
-    if(Array.isArray(parsed)) return parsed;
-    return null;
-  }catch(e){ return null; }
-}
-function savePinsToStorage(pins){ try{ localStorage.setItem(LOCAL_PINS_KEY, JSON.stringify(pins)); }catch(e){} }
-
-function cleanupExpiredPins(pins){
-  const kept = pins.filter(p => {
-    try{
-      const expDate = parseExpiry(p.expires);
-      return expDate.getTime() >= nowTime();
-    }catch(e){
-      return true;
-    }
-  });
-  if(kept.length !== pins.length) savePinsToStorage(kept);
-  return kept;
-}
-
-function getActivePins(){
-  let pins = loadPinsFromStorage();
-  if(!pins){
-    pins = PINS_SOURCE.slice();
-    savePinsToStorage(pins);
-  }
-  pins = cleanupExpiredPins(pins);
-  return pins;
-}
-
-let ACTIVE_PINS = getActivePins();
-
-/* =========================
-   Device ban check
-   ========================= */
-(function checkBan(){
-  const ban = localStorage.getItem('DEZZ_BAN');
-  if(!ban) return;
-  try{
-    const [device, until] = ban.split('|');
-    if(Date.now() < Number(until)){
-      document.body.innerHTML = `<div style="padding:40px;text-align:center"><h1 style="color:#ff6b6b">DEVICE BANNED</h1><p>Perangkat dibanned sampai ${new Date(Number(until)).toLocaleString()}</p></div>`;
-    } else {
-      localStorage.removeItem('DEZZ_BAN');
-      localStorage.removeItem('DEZZ_BAD');
-    }
-  }catch(e){}
-})();
-
-/* =========================
-   Auth: show/hide overlay
-   ========================= */
-function isAuthorized(){ return localStorage.getItem('dz_authorized') === '1'; }
-function showLoginIfNeeded(){
-  if(isAuthorized()){
-    loginOverlay.style.display = 'none';
-    logoutBtn.style.display = 'inline-block';
-  } else {
-    loginOverlay.style.display = 'flex';
-    logoutBtn.style.display = 'none';
-  }
-}
-showLoginIfNeeded();
-
-/* =========================
-   Login: PIN submit
-   ========================= */
-pinSubmit.addEventListener('click', async ()=>{
-  const val = (pinInput.value || '').trim();
-  if(!val){ loginMsg.style.display='block'; loginMsg.textContent='Masukkan PIN'; return; }
-
-  ACTIVE_PINS = getActivePins();
-  const h = await sha256(val);
-  const idx = ACTIVE_PINS.findIndex(p => p.hash === h);
-
-  if(idx === -1){
-    loginMsg.style.display='block'; loginMsg.textContent='PIN salah atau telah dihapus!';
-    registerBadAttempt();
-    return;
-  }
-
-  const pinData = ACTIVE_PINS[idx];
-  const expDate = parseExpiry(pinData.expires);
-  if(Date.now() > expDate.getTime()){
-    ACTIVE_PINS.splice(idx, 1);
-    savePinsToStorage(ACTIVE_PINS);
-    loginMsg.style.display='block'; loginMsg.textContent='PIN expired dan telah dihapus.';
-    registerBadAttempt();
-    return;
-  }
-
-  localStorage.setItem('dz_authorized','1');
-  loginOverlay.style.display = 'none';
-  loginMsg.style.display='none';
-  pinInput.value = '';
-  logoutBtn.style.display = 'inline-block';
-});
-
-/* WebAuthn fingerprint attempt */
-useFingerprint.addEventListener('click', async ()=>{
-  if(!window.PublicKeyCredential){ loginMsg.style.display='block'; loginMsg.textContent='Fingerprint/Authenticator tidak didukung.'; return; }
-  try{
-    await navigator.credentials.get({ publicKey: { challenge: new Uint8Array(16), userVerification: 'required' } });
-    localStorage.setItem('dz_authorized','1');
-    loginOverlay.style.display = 'none';
-    logoutBtn.style.display = 'inline-block';
+pinSubmit.addEventListener('click', ()=>{
+  const v = (pinInput.value||'').trim();
+  if(!v){ loginMsg.style.display='block'; loginMsg.textContent='Masukkan PIN'; return; }
+  if(VALID_PINS.includes(v)){
+    setAuthorized(true);
     loginMsg.style.display='none';
-  } catch(e){
-    loginMsg.style.display='block'; loginMsg.textContent='Fingerprint gagal atau dibatalkan';
-    registerBadAttempt();
+  } else {
+    loginMsg.style.display='block';
+    loginMsg.textContent='PIN salah!';
+    // small shake effect
+    pinInput.animate([{ transform: 'translateX(-6px)'},{ transform: 'translateX(6px)'},{ transform: 'translateX(0)' }], { duration: 280, easing:'ease' });
   }
 });
+pinCancel.addEventListener('click', ()=>{ loginOverlay.style.display='none'; });
+logoutBtn.addEventListener('click', ()=> setAuthorized(false));
 
-/* =========================
-   Bad attempts & ban
-   ========================= */
-function registerBadAttempt(){
-  const bad = Number(localStorage.getItem('DEZZ_BAD') || '0') + 1;
-  localStorage.setItem('DEZZ_BAD', String(bad));
-  if(bad >= MAX_BAD){
-    const device = shaDeviceFingerprintSync();
-    const until = Date.now() + (5 * 60 * 1000); // 5 minutes
-    localStorage.setItem('DEZZ_BAN', device + '|' + until);
-    alert('Terjadi terlalu banyak percobaan. Device dibanned 5 Menit.');
-    location.reload();
-  }
-}
-function shaDeviceFingerprintSync(){
-  const s = navigator.userAgent + '|' + screen.width + 'x' + screen.height + '|DEZZ';
-  let h = 2166136261 >>> 0;
-  for(let i=0;i<s.length;i++){ h = Math.imul(h ^ s.charCodeAt(i), 16777619); }
-  return 'DZ_' + (h>>>0).toString(16);
-}
-
-/* LOGOUT */
-logoutBtn.addEventListener('click', ()=>{
-  localStorage.removeItem('dz_authorized');
-  showLoginIfNeeded();
-});
-
-/* =========================
-   History helpers
-   ========================= */
-function updateHistoryDisplay(){
-  const h = JSON.parse(localStorage.getItem('dz_history') || '[]');
-  historyList.textContent = h.length ? h.slice(0,6).join(' · ') : '—';
-}
-function saveHistory(k){
-  let h = JSON.parse(localStorage.getItem('dz_history') || '[]');
-  h.unshift(k);
-  h = [...new Set(h)];
-  localStorage.setItem('dz_history', JSON.stringify(h.slice(0,40)));
-  updateHistoryDisplay();
-}
-updateHistoryDisplay();
-
-/* =========================
-   THEME: random on load, allow choose
-   ========================= */
+/* ========== Theme ========== */
 const THEMES = [
   {bg1:'#0b1116', bg2:'#0f1a21', accent:'#7dff7d'},
   {bg1:'#0b0716', bg2:'#220f3b', accent:'#b47dff'},
@@ -403,136 +308,120 @@ const THEMES = [
   {bg1:'#0a1a0f', bg2:'#072117', accent:'#7df0c4'},
   {bg1:'#1b071a', bg2:'#0b0f2e', accent:'#ff78d7'},
 ];
+function applyThemeObj(o){ document.documentElement.style.setProperty('--bg-1', o.bg1); document.documentElement.style.setProperty('--bg-2', o.bg2); document.documentElement.style.setProperty('--accent', o.accent); }
+function pickRandomTheme(){ applyThemeObj(THEMES[Math.floor(Math.random()*THEMES.length)]); themeSel.value='random'; }
+document.addEventListener('DOMContentLoaded', ()=> pickRandomTheme());
+themeSel.addEventListener('change', e => { if(e.target.value==='random') pickRandomTheme(); else { const map = { neon:THEMES[0], purple:THEMES[1], matrix:THEMES[2], blue:THEMES[3], red:THEMES[4], green:THEMES[5], pink:THEMES[6], dark:{bg1:'#050505',bg2:'#0b0b0b',accent:'#bdbdbd'} }; applyThemeObj(map[e.target.value]||THEMES[0]); } });
 
-function applyThemeObj(o){
-  document.documentElement.style.setProperty('--bg-1', o.bg1);
-  document.documentElement.style.setProperty('--bg-2', o.bg2);
-  document.documentElement.style.setProperty('--accent', o.accent);
-}
+/* ========== Expiry / countdown handling ========== */
+function startLocalExpiry(seconds){
+  // clear existing
+  if(countdownInterval) clearInterval(countdownInterval);
+  expiryAt = Date.now() + seconds*1000;
+  // show button blinking
+  copyBtn.classList.add('blink');
+  copyBtn.classList.remove('disabled');
 
-function pickRandomTheme(){
-  const r = THEMES[Math.floor(Math.random()*THEMES.length)];
-  applyThemeObj(r);
-  themeSel.value = 'random';
-  localStorage.removeItem('dz_theme');
-}
-
-/* map select => theme */
-function applyThemeByName(name){
-  if(name === 'random') { pickRandomTheme(); return; }
-  const map = {
-    neon: THEMES[0], purple: THEMES[1], matrix: THEMES[2],
-    blue: THEMES[3], red: THEMES[4], green: THEMES[5], pink: THEMES[6], dark: {bg1:'#050505',bg2:'#0b0b0b',accent:'#bdbdbd'}
-  };
-  const t = map[name] || THEMES[0];
-  applyThemeObj(t);
-  localStorage.setItem('dz_theme', name);
-}
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  const saved = localStorage.getItem('dz_theme');
-  if(!saved || saved === 'random') pickRandomTheme();
-  else applyThemeByName(saved);
-});
-themeSel.addEventListener('change', e => applyThemeByName(e.target.value));
-
-/* =========================
-   Expiry & Key display logic
-   ========================= */
-function startExpiry(){
-  if(expireTimer) clearTimeout(expireTimer);
-  if(countdownTimer) clearInterval(countdownTimer);
-  let remain = DURATION_SECONDS;
-  progressFill.style.width = '100%';
-  timeNote.textContent = `Sisa waktu: ${formatTimeLeft(remain)}`;
-  countdownTimer = setInterval(()=>{
-    remain--;
-    progressFill.style.width = Math.max(0,(remain/DURATION_SECONDS*100)) + '%';
-    timeNote.textContent = `Sisa waktu: ${formatTimeLeft(remain)}`;
-    if(remain <= 0){
-      clearInterval(countdownTimer);
+  countdownInterval = setInterval(()=>{
+    const leftMs = expiryAt - Date.now();
+    if(leftMs <= 0){
+      clearInterval(countdownInterval);
+      expireKeyNow();
+      return;
     }
-  },1000);
-  expireTimer = setTimeout(()=>{
-    lastKey = '';
-    keyText.textContent = 'KEY EXPIRED';
-    timeNote.textContent = 'Key expired.';
-    progressFill.style.width = '0%';
-    pickBtn.disabled = false;
-  }, DURATION_SECONDS * 1000);
+    const sec = Math.floor(leftMs/1000);
+    timeNote.textContent = `Sisa waktu: ${formatTimeLeft(sec)}`;
+    liveExpireNote.textContent = `Key aktif sampai: ${new Date(expiryAt).toLocaleString()}`;
+  }, 250); // more responsive
 }
 
-/* =========================
-   Generate Flow (with progress bar)
-   ========================= */
+function expireKeyNow(){
+  lastKey = "";
+  expiryAt = 0;
+  keyText.textContent = 'KEY EXPIRED';
+  timeNote.textContent = 'Key expired.';
+  liveExpireNote.textContent = '';
+  progressFill.style.width = '0%';
+  copyBtn.classList.remove('blink');
+  copyBtn.classList.add('disabled');
+  pickBtn.disabled = false;
+  // close modal if open
+  if(modal.classList.contains('show')){
+    modal.classList.remove('show');
+    setTimeout(()=> modalWrap.style.display='none',240);
+  }
+  // small pulse to show expired
+  keyText.animate([{opacity:1},{opacity:0.4},{opacity:1}],{duration:460});
+}
+
+function formatTimeLeft(sec){
+  const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60;
+  if(h>0) return `${h}h ${m}m ${s}s`;
+  if(m>0) return `${m}m ${s}s`;
+  return `${s}s`;
+}
+
+/* ========== Generate flow ========== */
 async function showGenerateProgressAndReveal(){
-  // visual progress: grow progressFill from 0 to 100 over ~2.5s, then show modal
   progressFill.style.transition = 'width 400ms linear';
   progressFill.style.width = '6%';
   keyText.textContent = 'GENERATING…';
   timeNote.textContent = 'Memproses...';
-
-  // step increments
-  const steps = [22, 38, 62, 78, 92, 100];
-  for(let i=0;i<steps.length;i++){
-    await new Promise(r=>setTimeout(r, 300 + Math.random()*260));
-    progressFill.style.width = steps[i] + '%';
-  }
-  // small pause
-  await new Promise(r=>setTimeout(r, 280));
-  // reveal key
+  const steps = [22,38,62,78,92,100];
+  for(let i=0;i<steps.length;i++){ await new Promise(r=>setTimeout(r, 300 + Math.random()*240)); progressFill.style.width = steps[i] + '%'; }
+  await new Promise(r=>setTimeout(r, 250));
   pickBtn.disabled = false;
   revealKeyModal();
 }
 
 function revealKeyModal(){
-  // assign lastKey and expiry
   const expiresAt = new Date(Date.now() + DURATION_SECONDS*1000);
-  const expireStr = `${expiresAt.getFullYear()}-${String(expiresAt.getMonth()+1).padStart(2,'0')}-${String(expiresAt.getDate()).padStart(2,'0')} ${String(expiresAt.getHours()).padStart(2,'0')}:${String(expiresAt.getMinutes()).padStart(2,'0')}`;
   modalKey.textContent = lastKey || 'UNKNOWN';
-  modalMeta.textContent = `Expired: ${expireStr}`;
+  modalMeta.textContent = `Expired: ${expiresAt.getFullYear()}-${String(expiresAt.getMonth()+1).padStart(2,'0')}-${String(expiresAt.getDate()).padStart(2,'0')} ${String(expiresAt.getHours()).padStart(2,'0')}:${String(expiresAt.getMinutes()).padStart(2,'0')}`;
   modalTitle.textContent = 'KEY GENERATED';
-  // show modal
   modalWrap.style.display = 'flex';
   setTimeout(()=> modal.classList.add('show'), 20);
   modalWrap.setAttribute('aria-hidden','false');
-  // start expiry countdown in UI
-  startExpiry();
+  // start local expiry (real-time)
+  startLocalExpiry(DURATION_SECONDS);
 }
 
-/* pick random key (button) */
+/* pick random key action */
 pickBtn.addEventListener('click', ()=>{
-  if(!isAuthorized()){
-    showLoginIfNeeded();
-    alert('Silakan login terlebih dahulu (PIN / Fingerprint).');
-    return;
-  }
-
-  // disable and start
+  if(!isAuthorized()){ loginOverlay.style.display='flex'; loginMsg.style.display='none'; pinInput.value=''; pinInput.focus(); return; }
   pickBtn.disabled = true;
-  // pick key
-  const idx = Math.floor(Math.random()*keys.length);
-  lastKey = keys[idx];
-  // show quick local display while progress animates
-  keyText.textContent = 'MENYIAPKAN KEY...';
+  const idx = Math.floor(Math.random()*KEYS_POOL.length);
+  lastKey = KEYS_POOL[idx];
+  keyText.textContent = lastKey;
   timeNote.textContent = '';
   progressFill.style.width = '3%';
-  // simulate progress + show modal
   showGenerateProgressAndReveal();
   // save history
-  saveHistory(lastKey);
+  let h = JSON.parse(localStorage.getItem('dz_history') || '[]');
+  h.unshift(lastKey); h = [...new Set(h)]; localStorage.setItem('dz_history', JSON.stringify(h.slice(0,40)));
+  historyList.textContent = h.length ? h.slice(0,6).join(' · ') : '—';
 });
 
-/* COPY / SHARE / QR */
+/* copy button: uses navigator.clipboard and visual feedback */
 copyBtn.addEventListener('click', async ()=>{
   if(!lastKey) return alert('Tidak ada key untuk disalin!');
-  try{ await navigator.clipboard.writeText(lastKey); alert('✔ Key disalin!'); }
-  catch(e){ alert('Gagal salin.'); }
+  try{
+    await navigator.clipboard.writeText(lastKey);
+    // short feedback
+    copyBtn.animate([{transform:'scale(1)'},{transform:'scale(1.05)'},{transform:'scale(1)'}],{duration:220});
+    const prev = copyBtn.textContent;
+    copyBtn.textContent = 'COPIED';
+    setTimeout(()=> copyBtn.textContent = prev, 900);
+  } catch(e){
+    alert('Gagal salin.');
+  }
 });
+
+/* share & qr */
 shareBtn.addEventListener('click', async ()=>{
   if(!lastKey) return alert('Tidak ada key untuk dibagikan!');
   if(navigator.share){ try{ await navigator.share({text:lastKey}); }catch(e){} }
-  else alert('Share tidak didukung di browser ini.');
+  else alert('Share tidak didukung.');
 });
 qrBtn.addEventListener('click', ()=>{
   if(!lastKey) return alert('Tidak ada key untuk QR!');
@@ -542,25 +431,32 @@ qrBtn.addEventListener('click', ()=>{
 
 /* modal controls */
 modalClose.addEventListener('click', ()=>{ modal.classList.remove('show'); setTimeout(()=> modalWrap.style.display='none',240); });
-modalCopy.addEventListener('click', async ()=>{
-  try{ await navigator.clipboard.writeText(modalKey.textContent); alert('✔ Key disalin!'); }catch(e){ alert('Gagal salin.'); }
-});
+modalCopy.addEventListener('click', async ()=>{ try{ await navigator.clipboard.writeText(modalKey.textContent); alert('✔ Key disalin!'); }catch(e){ alert('Gagal salin.'); }});
 
-/* =========================
-   PIN authoring: allow admin to inject or reset active pins via console (optional)
-   Example usage in console:
-   localStorage.setItem('dz_pins_active', JSON.stringify(PINS_SOURCE));
-   ========================= */
+/* ========== Neon clocks ========== */
+function updateClocks(){
+  const now = new Date();
+  const d = String(now.getDate()).padStart(2,'0');
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const y = now.getFullYear();
+  const hh = String(now.getHours()).padStart(2,'0');
+  const mm = String(now.getMinutes()).padStart(2,'0');
+  const ss = String(now.getSeconds()).padStart(2,'0');
+  clockTop.textContent = `${d}-${m}-${y} | ${hh}:${mm}:${ss}`;
+  clockBottom.textContent = `${d}-${m}-${y} | ${hh}:${mm}:${ss}`;
+}
+setInterval(updateClocks,1000);
+updateClocks();
 
-/* On first load ensure active saved */
-if(!loadPinsFromStorage()) savePinsToStorage(PINS_SOURCE);
+/* If key expires while modal open, we already clear in startLocalExpiry */
+/* Ensure initial state for copy button */
+copyBtn.classList.add('disabled');
+historyList.textContent = (JSON.parse(localStorage.getItem('dz_history')||'[]').slice(0,6).join(' · ')||'—');
 
-/* Optional: auto-open login on first visit */
+/* Auto-open login overlay if not authorized */
 if(!isAuthorized()) loginOverlay.style.display = 'flex';
 
-/* keep history displayed */
-updateHistoryDisplay();
-
 </script>
+
 </body>
 </html>
