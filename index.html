@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>DezZ✘MODS —Premium Key Generator (Full)</title>
+<title>Key Generator (Full)</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -77,6 +77,68 @@
   .note-strong{font-weight:800;font-size:12px}
   /* small responsive */
   @media (max-width:700px){ .card{padding:12px} .key-display{min-height:160px} }
+
+  /* ====== NEON STRIKE & BLINK (looping) ====== */
+  .neon-strike {
+    position: relative;
+    display: inline-block;
+    color: #00eaff; /* teks neon color */
+    text-shadow: 0 0 6px #00eaff, 0 0 12px #00eaff;
+    font-weight: 900;
+    /* blinking text (subtle) */
+    animation: neonTextBlink 1.2s linear infinite;
+  }
+
+  .neon-strike::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg,#00eaff,#64ff35); /* neon gradient line */
+    box-shadow: 0 0 10px #00eaff, 0 0 20px #64ff35;
+    /* blink animation for the strike line (looping) */
+    animation: neonStrikeBlink 1.2s linear infinite;
+  }
+
+  @keyframes neonTextBlink {
+    0% { opacity: 1; filter: drop-shadow(0 0 6px #00eaff); }
+    50% { opacity: 0.7; filter: drop-shadow(0 0 3px #00eaff); }
+    100% { opacity: 1; filter: drop-shadow(0 0 6px #00eaff); }
+  }
+
+  @keyframes neonStrikeBlink {
+    0% { opacity: 1; width: 100%; transform: translateY(-50%) scaleX(1); }
+    50% { opacity: 0.45; transform: translateY(-50%) scaleX(0.98); }
+    100% { opacity: 1; transform: translateY(-50%) scaleX(1); }
+  }
+
+  /* ====== SIMPLE POPUP/TOAST ====== */
+  .toast {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    bottom: 24px;
+    background: rgba(0,0,0,0.9);
+    color: #00eaff;
+    padding: 12px 18px;
+    border-radius: 10px;
+    display: none;
+    z-index: 20000;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 12px #00eaff;
+    font-weight: 800;
+  }
+  .toast.show {
+    display: block;
+    animation: toastIn 0.28s ease;
+  }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(30px) scale(.98); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  }
+
 </style>
 </head>
 <body>
@@ -90,11 +152,14 @@
     <div class="card" role="main">
       <div>
         <div class="toprow">
-          <h1>𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎 V.1.3</h1>
+          <h1>𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎 - GENERATE KEY</h1>
           <div style="margin-left:auto"><button id="logoutBtn" class="logout" style="display:none">Logout</button></div>
         </div>
 
-        <p class="small"> KEY  <strong>YSM/THEKING</strong>. Tekan <em>GET KEY </em> untuk generate.</p>
+        <p class="small">
+          KEY <strong><span class="neon-strike">GOD MODS</span> + THE KING OFC + GRINGO + YSM</strong>.
+          Tekan <em>GET KEY</em> untuk generate.
+        </p>
 
         <div id="keyDisplay" class="key-display">
           <div id="keyText"> CLIK GET KEY</div>
@@ -202,62 +267,47 @@
   <div id="clockBottom" style="position:fixed;bottom:10px;left:50%;transform:translateX(-50%);pointer-events:none;z-index:12000">
     <div class="neon-clock" id="clockNeonBottom">--</div>
   </div>
+  
+   <!-- SIMPLE NEON POPUP/TOAST -->
+<div id="toast" class="toast">SAYA... HANYA MENGINGATKAN KALO ADA TEKS BAGIAN KIRI ATAS KEDIP WARNA BIRU BERATI ITU TIDAK TERDAFTAR KEYNYA, KALO TIDAK ADA TEKS CORET SEPERTI ITU BERARTI ITU TERDAFTAR</div>
+<button id="showToastBtn" style="position:fixed;top:100px;left:200px;z-index:20001;padding:10px 16px;">Tampilkan Popup</button>
 
 <script>
 /* ========== Simple config ========== */
-const VALID_PINS = ["1DAY"];
+const VALID_PINS = ["LDV2"];
 const DURATION_SECONDS = 60; // 1 Menit
 const KEYS_POOL = [
-  "King_Cheats_U6QNST46P", 
-  "King_Cheats_AA6Z6NHDY", 
-  "King_Cheats_A8RQ3RY5Y", 
-  "King_Cheats_D1I0SRC4D", 
-  "King_Cheats_U2JNU9XUM", 
-  "King_Cheats_J1W944SQF", 
-  "TlhmyoZIMBQV", 
-  "muakeylacokey", 
-  "King_Cheats_UWOJ3D7L9", 
-  "IvP5oYY66gHu", 
-  "y1k0NXl9pxLM", 
-  "9n808HHzkOvw", 
-  "eXLzjeDQeNmv", 
-  "Sntr2iRNjMDq", 
-  "eGob1y8SUbVh", 
-  "kjAxgtZQadae", 
-  "vEd77LUYLntP", 
-  "8uBQxcyhDKyf", 
-  "zvTJde9A4WOp", 
-  "GmVmMAveUhxc", 
-  "y673pTeyTXFJ", 
-  "ZNsHHk8gaoby", 
-  "fiS2CiLVaH9h", 
-  "B4ObawKQbMRE", 
-  "i9bguHjjclaR", 
-  "klG4n6Dvlyf3", 
-  "o8TzQepX2HNH", 
-  "YWdcusPw6X12", 
-  "C9zuXCuyip3b", 
-  "5Lxih4GRVB2c", 
-  "jFvg8zwjYuaw", 
-  "IDqvfqwYp8IB", 
-  "7wL4DGk1fKcy", 
-  "p8KJLBYNU8V1", 
-  "cUtXEYj5465b", 
-  "V218IzNLSZYx", 
-  "XA3wBaTKPNNT", 
-  "6c7NBGxCVSS6", 
-  "bTbnDAteSJeH", 
-  "M974f7hWb9ux", 
-  "gjGFEoXnt5Xk", 
-  "tkJjhvAdWHM0", 
-  "zgImJqRzBHFA", 
-  "TgJj4NCz1NVx", 
-  "wFHahugeBquR", 
-  "75BYRrVf5qPL", 
-  "KCmRnQUqnYLm", 
-  "kqDiGcTp5ZQW", 
-  "td6l6cS1X2Lx", 
-  "R64I7uB32jiU"
+  "hEUa1MGkurzH", 
+  "rpD3dGJ7ETtU", 
+  "flBhbhZxD3dC", 
+  "7laW3548Mbx", 
+  "f3eO0gzkDKjD", 
+  "gw2rb1wEHxfa",
+  "iU0u7he2Lx5a", 
+  "aoxKXyi7veZO", 
+  "f0BxCCWvTZSG", 
+  "uQK5GFtZRUY2", 
+  "quTHajrq8sYo", 
+  "yiRgIU4nRr49", 
+  "2KUAschdlfLS", 
+  "USZUhdJcdIM6", 
+  "sQ0Zw0KgSvKO", 
+  "5Kqnxd32WTAP", 
+  "eVLJAOkZK3mB", 
+  "QfkBFh7KCxmb", 
+  "FkdXKc9bHxCd", 
+  "W7nEx7fghbef", 
+  "4Pv8I0DbKbpR", 
+  "SFxG0LzbhLdC", 
+  "s3iVHAiIKnRg", 
+  "King_Cheats_GI63R1Y13", 
+  "GRINGO-6855200", 
+  "King_Cheats_KST7ZW1HA", 
+  "King_Cheats_B24I1OTYB", 
+  "GRINGO-8497913", 
+  "King_Cheats_R303QKMZ4", 
+  "GRINGO-4021598", 
+  "King_Cheats_VTU6UJMPZ"
 ];
 
 
@@ -631,7 +681,15 @@ window.DEZZ = {
   isBanned: () => isDeviceBanned(deviceFingerprint()),
   banRemaining: () => getBanRemainingSeconds(deviceFingerprint()),
   unban: () => { localStorage.removeItem(getBanKeyName(deviceFingerprint())); localStorage.removeItem(getBadKeyName(deviceFingerprint())); alert('Unbanned locally'); }
-};
+}
+
+const toast = document.getElementById('toast');
+const showToastBtn = document.getElementById('showToastBtn');
+
+showToastBtn.addEventListener('click', ()=>{
+  toast.classList.add('show');
+  setTimeout(()=> toast.classList.remove('show'), 10000); // popup hilang setelah 10 detik
+});
 
 </script>
 </body>
