@@ -120,15 +120,15 @@
     position: fixed;
     left: 50%;
     transform: translateX(-50%) translateY(20px);
-    bottom: 24px;
+    bottom: 400px;
     background: rgba(0,0,0,0.9);
     color: #00eaff;
-    padding: 12px 18px;
+    padding: 25px 25px;
     border-radius: 10px;
     display: none;
     z-index: 20000;
     box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 12px #00eaff;
-    font-weight: 800;
+    font-weight: 900;
   }
   .toast.show {
     display: block;
@@ -148,6 +148,31 @@
     <div id="clockNeonTop" class="neon-clock">--</div>
   </div>
 
+<!-- Musik login -->
+<audio id="loginMusic" loop>
+  <source src="https://files.catbox.moe/v2sx4p.mp3" type="audio/mpeg">
+</audio>
+
+<div id="musicPopup" style="
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(0,0,0,0.85);
+  padding: 14px 22px;
+  border-radius: 12px;
+  color: #00eaff;
+  font-weight: bold;
+  display: none;
+  text-align: center;
+  font-size: 16px;
+  box-shadow: 0 0 15px #00eaff, 0 0 30px #64ff35;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+">
+  Musik Dimulai 🎵
+</div>
+  
   <div class="wrap">
     <div class="card" role="main">
       <div>
@@ -157,7 +182,7 @@
         </div>
 
         <p class="small">
-          KEY <strong><span class="neon-strike">GOD MODS</span> + THE KING OFC + GRINGO + YSM</strong>.
+          KEY <strong><span class="neon-strike">GOD MODS+GRINGO+MK+RUSH</span>___[THE KING OFC + YSM]</strong>.
           Tekan <em>GET KEY</em> untuk generate.
         </p>
 
@@ -274,40 +299,42 @@
 
 <script>
 /* ========== Simple config ========== */
-const VALID_PINS = ["LDV2"];
+const VALID_PINS = ["LDAYAMV1.1"];
 const DURATION_SECONDS = 60; // 1 Menit
 const KEYS_POOL = [
-  "hEUa1MGkurzH", 
-  "rpD3dGJ7ETtU", 
-  "flBhbhZxD3dC", 
-  "7laW3548Mbx", 
-  "f3eO0gzkDKjD", 
-  "gw2rb1wEHxfa",
-  "iU0u7he2Lx5a", 
-  "aoxKXyi7veZO", 
-  "f0BxCCWvTZSG", 
-  "uQK5GFtZRUY2", 
-  "quTHajrq8sYo", 
-  "yiRgIU4nRr49", 
-  "2KUAschdlfLS", 
-  "USZUhdJcdIM6", 
-  "sQ0Zw0KgSvKO", 
-  "5Kqnxd32WTAP", 
-  "eVLJAOkZK3mB", 
-  "QfkBFh7KCxmb", 
-  "FkdXKc9bHxCd", 
-  "W7nEx7fghbef", 
-  "4Pv8I0DbKbpR", 
-  "SFxG0LzbhLdC", 
-  "s3iVHAiIKnRg", 
-  "King_Cheats_GI63R1Y13", 
-  "GRINGO-6855200", 
-  "King_Cheats_KST7ZW1HA", 
-  "King_Cheats_B24I1OTYB", 
-  "GRINGO-8497913", 
-  "King_Cheats_R303QKMZ4", 
-  "GRINGO-4021598", 
-  "King_Cheats_VTU6UJMPZ"
+  "iJOzomnmIhVh", 
+  "GXEq3fJ8ExE7", 
+  "09FSwYn3J1Qy", 
+  "Znbuzpj8ZI6u", 
+  "o7PW5VMFZ8b6", 
+  "71FbILxASA4g", 
+  "IEOhkkOrKKfg", 
+  "TFNgzwz326wL", 
+  "ei5HBDsq3bHR", 
+  "DF6o57j6MSYH", 
+  "ywqLGvY2WbGX", 
+  "JoqxaMoulCZu", 
+  "hSwRI6390EQN", 
+  "0iqhyOl00Cs1", 
+  "CJUE2zD8I9Z", 
+  "FKk4AinqRyhd", 
+  "gNUtLRkJ0na9", 
+  "gZfRUub8rJlm", 
+ " ewsU2XBNaiq", 
+  "HPgnfcWVpiRn", 
+  "4d3xc0fI1PQS", 
+  "X5uXf0Z14Wns", 
+  "z6QjsfOCmScG", 
+  "King_Cheats_74XWRE7QM", 
+  "King_Cheats_7IV9JD3MF", 
+  "King_Cheats_SCJRMBRF5", 
+  "King_Cheats_SIPOZGJM2", 
+  "King_Cheats_VULE6F4SL", 
+  "King_Cheats_8YIUO8JOU", 
+  "King_Cheats_WP3D35UE", 
+  "King_Cheats_XE3SUKBZO", 
+  "King_Cheats_WGQ2LSSB7", 
+  "King_Cheats_035L3W6Q0"
 ];
 
 
@@ -412,27 +439,59 @@ function setAuthorized(flag){
 }
 setAuthorized(isAuthorized());
 
-pinSubmit.addEventListener('click', ()=>{
+pinSubmit.addEventListener('click', ()=> {
   const v = (pinInput.value||'').trim();
   const fp = deviceFingerprint();
+
   if(isDeviceBanned(fp)){
     const sec = getBanRemainingSeconds(fp);
-    loginMsg.style.display='block';
+    loginMsg.style.display = 'block';
     loginMsg.textContent = `Perangkat terbanned. Coba lagi dalam ${sec}s`;
     return;
   }
-  if(!v){ loginMsg.style.display='block'; loginMsg.textContent='Masukkan PIN'; return; }
+
+  if(!v){
+    loginMsg.style.display = 'block';
+    loginMsg.textContent='Masukkan PIN';
+    return;
+  }
+
   if(VALID_PINS.includes(v)){
     setAuthorized(true);
     loginMsg.style.display='none';
-    // reset bad counter for device
     localStorage.removeItem(getBadKeyName(fp));
+
+    const music = document.getElementById('loginMusic');
+const popup = document.getElementById('musicPopup');
+
+function showMusicPopup() {
+  popup.style.display = 'block';
+  setTimeout(() => {
+    popup.style.opacity = '1';
+    popup.style.transform = 'translateX(-50%) translateY(0)';
+  }, 50); // animasi muncul halus
+
+  // otomatis hilang setelah 3 detik
+  setTimeout(() => {
+    popup.style.opacity = '0';
+    popup.style.transform = 'translateX(-50%) translateY(20px)';
+    setTimeout(() => popup.style.display = 'none', 400); // tunggu animasi hilang
+  }, 3000);
+}
+
+// contoh pemanggilan saat login sukses
+music.play().then(() => {
+  showMusicPopup();
+}).catch(() => {
+  // fallback autoplay gagal
+  popup.textContent = "Klik untuk memulai musik 🎵";
+  popup.style.display = 'block';
+  setTimeout(() => popup.style.display = 'none', 5000);
+});
   } else {
     loginMsg.style.display='block';
     loginMsg.textContent='PIN salah!';
-    // animate input
     pinInput.animate([{ transform: 'translateX(-6px)'},{ transform: 'translateX(6px)'},{ transform: 'translateX(0)' }], { duration: 280, easing:'ease' });
-    // increment bad count and maybe ban
     const r = incrementBad(fp);
     if(r.banned){
       loginMsg.textContent = 'Perangkat dibanned sementara karena terlalu banyak percobaan.';
@@ -440,7 +499,7 @@ pinSubmit.addEventListener('click', ()=>{
       loginMsg.textContent += ` (${r.count}/${MAX_BAD})`;
     }
   }
-});
+});  
 pinCancel.addEventListener('click', ()=>{ loginOverlay.style.display='none'; });
 logoutBtn.addEventListener('click', ()=> setAuthorized(false));
 
