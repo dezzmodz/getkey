@@ -40,8 +40,23 @@
   .modal-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:10000;pointer-events:none}
   .modal{min-width:320px;max-width:780px;background:linear-gradient(180deg,rgba(0,0,0,0.75),rgba(0,0,0,0.5));border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 20px 60px rgba(0,0,0,0.6);transform:scale(.95);opacity:0;transition:all 240ms ease;pointer-events:auto}
   .modal.show{transform:scale(1);opacity:1}
-  .neon-title{font-size:18px;font-weight:800;text-align:center;color:var(--accent);text-shadow:0 0 12px rgba(0,255,150,0.18),0 0 30px rgba(0,255,150,0.08)}
-  .modal-key{font-family:monospace;margin:14px 0;padding:12px;border-radius:10px;background:linear-gradient(90deg,#bfffbf,var(--accent));text-align:center;font-size:18px;color:#000;box-shadow:0 6px 30px rgba(0,255,150,0.08)}
+  .neon-title{font-size:18px;font-weight:900;text-align:center;color:var(--accent);text-shadow:0 0 12px rgba(0,255,150,0.18),0 0 30px rgba(0,255,150,0.08)}
+  .modal-key {
+  font-family: monospace;
+  margin: 20px 0;
+  padding: 30px;
+  border-radius: 20px;
+  background: linear-gradient(90deg,#bfffbf,var(--accent));
+  text-align: center;
+  font-size: 15px;
+  color: #000;
+  box-shadow: 5px 30px rgba(0,255,150,0.08);
+
+  /* ===== FIX TEKS KELUAR ===== */
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;}
   .modal-meta{font-size:13px;opacity:0.85;text-align:center;margin-top:6px}
   .neon-glow{box-shadow:0 6px 28px rgba(0,255,150,0.12), 0 0 80px rgba(0,255,150,0.06)}
   .flex-center{display:flex;align-items:center;gap:8px}
@@ -163,7 +178,7 @@
   <div id="clockTopWrap">
     <div id="clockNeonTop" class="neon-clock">--</div>
   </div>
-  
+
 <div class="wrap">
   <div class="card" role="main">
     <div>
@@ -238,11 +253,10 @@
           <a href="https://dezzmodz.github.io/JOIN//" target="_blank">JOIN CHANEL ME</a>
         </div>
 
-        <div style="margin-top:12px" class="small">History: <span id="historyList">—</span></div>
         <div class="admin-note">𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎....☕ INI ADALAH WEB GET KEY+FIES 
         KALIAN BISA GET KEY DAN DAPATKAN KEY RANDOM, PIN LOJIN SILHKAN DM (TELEGRAM: @dezzmods/ TIKTOK: @dezz_realmods</div>
         <div style="position:fixed;top:990px;left:100px;z-index:200;padding:5px 8px;class="admin-note">©WEB RESMI 𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎</div>
-      
+
       <!-- Musik login -->
 <audio id="loginMusic" loop>
   <source src="https://files.catbox.moe/0jr72e.mp3" type="audio/mpeg">
@@ -267,7 +281,7 @@
 ">
   Musik Dimulai 🎵
 </div>
-      
+
 
   <!-- LOGIN OVERLAY (neon-glass) -->
   <div id="loginOverlay" class="login-overlay" style="display:none">
@@ -310,7 +324,7 @@
   <div id="clockBottom" style="position:fixed;bottom:10px;left:50%;transform:translateX(-50%);pointer-events:none;z-index:12000">
     <div class="neon-clock" id="clockNeonBottom">--</div>
   </div>
-  
+
    <!-- SIMPLE NEON POPUP/TOAST -->
 <div id="toast" class="toast">SAYA... HANYA MENGINGATKAN KALO ADA TEKS BAGIAN KIRI ATAS KEDIP WARNA BIRU BERATI ITU TIDAK TERDAFTAR KEYNYA, KALO TIDAK ADA TEKS CORET SEPERTI ITU BERARTI ITU TERDAFTAR</div>
 <button id="showToastBtn" style="position:fixed;top:398px;left:295px;z-index:200;padding:5px 8px;">PESAN</button>
@@ -320,49 +334,26 @@
 const VALID_PINS = ["GiveMember","Dezz"];
 const DURATION_SECONDS = 30; // 30 detik
 const KEYS_POOL = [
-  "HOLOGRAM RED<br>https://sub4unlock.io/nB1t2",
+  "HOLOGRAM RED     https://sub4unlock.io/nB1t2",
   "Error",
-  "HOLO FF MAX_3D PREM<br>https://sub4unlock.io/BtDQy",
-  "HOLOGRAM PINK [ KE MMK AELIN ]<br>https://sub4unlock.io/VE84J",
-  "HOLOGRAM BLUE<br>https://sub4unlock.io/dgTtr",
-  "HOLOGRAM BLUE TRANSNPARAN<br>https://sub4unlock.io/Ox01k",
-  "HOLOGRAM GREN<br>https://sub4unlock.io/c7eUi",
-  "HOLOGRAM ORANGE<br>https://sub4unlock.io/dYcL3",
-  "HOLOGRAM 3D X DRAG HS<br>https://sub4unlock.io/c9ezR",
-  "HOLOGRAM YELOW<br>https://sub4unlock.io/NfB6U",
-  "HOLOGRAM WHITE<br>https://sub4unlock.io/s7flN",
-  "Error",
-  "Error",
-  "Error",
-  "Error",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "Error",
-  "Error",
-  "Error",
-  "Error",
-  "Error",
-  "Error",
-  "Error",
-  "Error",
-  "Error",
-  "Error",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "COBA LAGI",
-  "STAR ULANG"
+  "HOLO FF MAX_3D PREM     https://sub4unlock.io/BtDQy",
+  "HOLOGRAM PINK [ KE MMK AELIN ]     https://sub4unlock.io/VE84J",
+  "HOLOGRAM BLUE     https://sub4unlock.io/dgTtr",
+  "HOLOGRAM BLUE TRANSNPARAN     https://sub4unlock.io/Ox01k",
+  "HOLOGRAM GREN     https://sub4unlock.io/c7eUi",
+  "HOLOGRAM ORANGE     https://sub4unlock.io/dYcL3",
+  "HOLOGRAM 3D X DRAG HS     https://sub4unlock.io/c9ezR",
+  "HOLOGRAM YELOW     https://sub4unlock.io/NfB6U",
+  "HOLOGRAM WHITE     https://sub4unlock.io/s7flN",
+  "STAR ULANG 1 X LAGI!!!!",
+  "STAR ULANG 1 X LAGI!!!!",
+  "STAR ULANG 1 X LAGI!!!!",
+  "STAR ULANG 1 X LAGI!!!!",
+  "STAR ULANG 1 X LAGI!!!!",
+  "STAR ULANG 1 X LAGI!!!!",
+  "STAR ULANG 1 X LAGI!!!!",
+  "STAR ULANG 1 X LAGI!!!!",
+  "STAR ULANG 1 X LAGI!!!!"
 ];
 
 
@@ -386,7 +377,6 @@ const qrDownload = document.getElementById('qrDownload');
 const keyText = document.getElementById('keyText');
 const progressFill = document.getElementById('progressFill');
 const timeNote = document.getElementById('timeNote');
-const historyList = document.getElementById('historyList');
 const logoutBtn = document.getElementById('logoutBtn');
 const themeSel = document.getElementById('themeSel');
 const modalWrap = document.getElementById('modalWrap');
@@ -733,8 +723,6 @@ updateClocks();
    INITIAL STATE & BAN CHECK
 */
 function init(){
-  // load history
-  historyList.textContent = (JSON.parse(localStorage.getItem('dezz_history')||'[]').slice(0,0).join(' · ')||'—');
   // copy button disabled initially
   copyBtn.classList.add('disabled');
 
