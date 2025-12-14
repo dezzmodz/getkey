@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>FILES+KEY</title>
+<title>Generator KEY+FILE</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -249,7 +249,7 @@
           <a href="https://t.me/addlist/zNLRBwRsPOQ3OTZl" target="_blank">Telegram</a>
           <a href="https://sociabuzz.com/dezzreal" target="_blank">Sociabuzz</a>
           <a href="https://whatsapp.com/channel/0029Vb7Gl23EFeXuLGF1yB1G" target="_blank">WhatsApp</a>
-          <a href="https://dezzmodz.github.io/UNBANV2/" target="_blank">UNBAN WAV1</a>
+          <a href="https://dezzmodz.github.io/UNBANV1/" target="_blank">UNBAN WAV1</a>
           <a href="https://dezzmodz.github.io/JOIN//" target="_blank">JOIN CHANEL ME</a>
         </div>
 
@@ -259,7 +259,7 @@
 
       <!-- Musik login -->
 <audio id="loginMusic" loop>
-  <source src="https://files.catbox.moe/ip7i35.mp3" type="audio/mpeg">
+  <source src="https://files.catbox.moe/0jr72e.mp3" type="audio/mpeg">
 </audio>
 
 <div id="musicPopup" style="
@@ -279,7 +279,7 @@
   opacity: 0;
   transition: opacity 0.4s ease, transform 0.4s ease;
 ">
-  Welcome    Musik Dimulai...🎵
+  Musik Dimulai 🎵
 </div>
 
 
@@ -289,16 +289,16 @@
       <div class="login-title">
         <img src="https://files.catbox.moe/5pf5s6.jpg" class="login-avatar" />
         <div>
-          <div style="font-weight:500">💫𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎⚡</div>
-          <div class="login-note small">PASSWORD:- DEZZXMODS</div>
+          <div style="font-weight:800">💫𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎⚡</div>
+          <div class="login-note small">PASSWORD 𝐃𝐌 𝐓𝐈𝐊𝐓𝐎𝐊:@dezz_realmods</div>
         </div>
       </div>
 
-      <div style="margin-top:6px">
-        <input id="pinInput" class="glass-input" type="password" placeholder="DEZZXMODS" />
+      <div style="margin-top:12px">
+        <input id="pinInput" class="glass-input" type="password" placeholder="MASUKAN PASSWORD" />
       </div>
 
-      <div style="display:flex;gap:8px;margin-top:6px">
+      <div style="display:flex;gap:8px;margin-top:12px">
         <button id="pinSubmit" class="btn">LOGIN</button>
         <button id="pinCancel" class="btn-ghost">Batal</button>
       </div>
@@ -306,7 +306,6 @@
       <div id="loginMsg" class="small" style="color:#ff6b6b;margin-top:8px;display:none"></div>
     </div>
   </div>
-
 
   <!-- MODAL -->
   <div id="modalWrap" class="modal-wrap" aria-hidden="true" style="display:none">
@@ -331,43 +330,9 @@
 <button id="showToastBtn" style="position:fixed;top:398px;left:295px;z-index:200;padding:5px 8px;">PESAN</button>
 
 <script>
-/* =============================
-   KEY SYSTEM (AUTO EXPIRE)
-============================= */
-
-// KEY DATABASE
-let KEY_DB = JSON.parse(localStorage.getItem("DEZZ_KEY_DB") || "{}");
-
-// DEVICE LOCK
-function getKeyFingerprint(){
-  return btoa(
-    navigator.userAgent +
-    screen.width + screen.height +
-    Intl.DateTimeFormat().resolvedOptions().timeZone
-  );
-}
-
-// KEY CHECK
-function verifyKey(inputKey){
-  const data = KEY_DB[inputKey];
-  if(!data) return "KEY_TIDAK_VALID";
-  if(data.used) return "KEY_SUDAH_DIPAKAI";
-  if(Date.now() > data.expire) return "KEY_EXPIRED";
-
-  const fp = getKeyFingerprint();
-  const saved = localStorage.getItem("dezz_key_fp");
-
-  if(saved && saved !== fp) return "DEVICE_BERBEDA";
-
-  data.used = true;
-  localStorage.setItem("dezz_key_fp", fp);
-  sessionStorage.setItem("dezz_key_ok", "1");
-
-  return "OK";
-}
+/* ========== Simple config ========== */
+const VALID_PINS = ["GiveMember","Dezz"];
 const DURATION_SECONDS = 30; // 30 detik
-const VALID_PINS = ["DEZZXMODS"
-];
 const KEYS_POOL = [
   "MAAF COBA ULANG KLICK START",
   "HOLOGRAM RED     https://sub4unlock.io/nB1t2",
@@ -504,19 +469,6 @@ function setAuthorized(flag){
   logoutBtn.style.display = flag ? 'inline-block' : 'none';
 }
 setAuthorized(isAuthorized());
-// ===== DEVICE LOG FUNCTION =====
-function saveDeviceLog(key){
-  const logs = JSON.parse(localStorage.getItem("device_logs") || "[]");
-
-  logs.push({
-    key: key,
-    device: navigator.userAgent,
-    screen: screen.width + "x" + screen.height,
-    time: new Date().toLocaleString()
-  });
-
-  localStorage.setItem("device_logs", JSON.stringify(logs));
-}
 
 pinSubmit.addEventListener('click', ()=> {
   const v = (pinInput.value||'').trim();
@@ -535,61 +487,39 @@ pinSubmit.addEventListener('click', ()=> {
     return;
   }
 
-  if (VALID_PINS.includes(v)) {
+  if(VALID_PINS.includes(v)){
+    setAuthorized(true);
+    loginMsg.style.display='none';
+    localStorage.removeItem(getBadKeyName(fp));
 
-  // ===== MINTA KEY =====
-  const key = prompt("🔐 MASUKKAN KEY AKSES");
-  if (!key) {
-    loginMsg.style.display = 'block';
-    loginMsg.textContent = 'Key wajib diisi!';
-    return;
-  }
+    const music = document.getElementById('loginMusic');
+const popup = document.getElementById('musicPopup');
 
-  const result = verifyKey(key);
+function showMusicPopup() {
+  popup.style.display = 'block';
+  setTimeout(() => {
+    popup.style.opacity = '1';
+    popup.style.transform = 'translateX(-50%) translateY(0)';
+  }, 100); // animasi muncul halus
 
-  if (result !== "OK") {
-    const msg = {
-      "KEY_TIDAK_VALID": "❌ Key tidak valid",
-      "KEY_SUDAH_DIPAKAI": "❌ Key sudah dipakai",
-      "KEY_EXPIRED": "❌ Key sudah expired",
-      "DEVICE_BERBEDA": "❌ Key terkunci di device lain"
-    };
-    alert(msg[result] || "❌ Key error");
-    return;
-  }
-
-// ===== LOGIN SUKSES =====
-saveDeviceLog(key);
-setAuthorized(true);
-loginMsg.style.display = 'none';
-localStorage.removeItem(getBadKeyName(fp));
-
-  // ===== MUSIC + POPUP =====
-  const music = document.getElementById('loginMusic');
-  const popup = document.getElementById('musicPopup');
-
-  function showMusicPopup() {
-    popup.style.display = 'block';
-    setTimeout(() => {
-      popup.style.opacity = '1';
-      popup.style.transform = 'translateX(-50%) translateY(0)';
-    }, 100);
-
-    setTimeout(() => {
-      popup.style.transform = 'translateX(-50%) translateY(70px)';
-      popup.style.opacity = '0';
-      setTimeout(() => popup.style.display = 'none', 1000);
-    }, 3000);
-  }
-
-  music.play().then(showMusicPopup).catch(() => {
-    popup.textContent = "Klik untuk memulai musik 🎵";
-    popup.style.display = 'block';
-    setTimeout(() => popup.style.display = 'none', 5000);
-  });
+  // otomatis hilang setelah 3 detik
+  setTimeout(() => {
+    popup.style.opacity = '1';
+    popup.style.transform = 'translateX(-50%) translateY(70px)';
+    setTimeout(() => popup.style.display = 'none', 1000); // tunggu animasi hilang
+  }, 3000);
 }
 
-else {
+// contoh pemanggilan saat login sukses
+music.play().then(() => {
+  showMusicPopup();
+}).catch(() => {
+  // fallback autoplay gagal
+  popup.textContent = "Klik untuk memulai musik 🎵";
+  popup.style.display = 'block';
+  setTimeout(() => popup.style.display = 'none', 5000);
+});
+  } else {
     loginMsg.style.display='block';
     loginMsg.textContent='PIN salah!';
     pinInput.animate([{ transform: 'translateX(-6px)'},{ transform: 'translateX(6px)'},{ transform: 'translateX(0)' }], { duration: 280, easing:'ease' });
