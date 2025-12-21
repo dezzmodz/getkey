@@ -259,9 +259,26 @@
         <div style="position:fixed;top:990px;left:100px;z-index:200;padding:5px 8px;class="admin-note">©WEB RESMI 𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎</div>
 
       <!-- Musik login -->
-<audio id="loginMusic" loop>
-  <source src="https://files.catbox.moe/0jr72e.mp3" type="audio/mpeg">
-</audio>
+<audio id="loginMusic" loop></audio>
+
+<script>
+const loginMusics = [
+  "https://files.catbox.moe/0jr72e.mp3",
+  "https://files.catbox.moe/2ntgsx.mp3",
+  "https://files.catbox.moe/ip7i35.mp3", 
+  "https://files.catbox.moe/rxesmk.mp3"
+];
+
+// Ambil elemen audio
+const audio = document.getElementById('loginMusic');
+
+// Pilih musik random
+const randomIndex = Math.floor(Math.random() * loginMusics.length);
+audio.src = loginMusics[randomIndex];
+
+// Putar otomatis saat login
+audio.play().catch(err => console.log("Autoplay blocked:", err));
+</script>
 
 <div id="musicPopup" style="
   position: fixed;
@@ -333,7 +350,7 @@
 <script>
 /* ========== Simple config ========== */
 const VALID_PINS = ["GiveMember","FamilyCHDezZ","Dezz"];
-const DURATION_SECONDS = 30; // 30 detik
+const DURATION_SECONDS = 15; // 15 detik
 const KEYS_POOL = [
   "MAAF COBA ULANG KLICK START",
   "HOLOGRAM RED     https://sub4unlock.io/nB1t2",
@@ -628,7 +645,7 @@ function expireKeyNow(){
   lastKey = "";
   expiryAt = 0;
   keyText.textContent = 'KEY EXPIRED';
-  timeNote.textContent = 'Key expired.';
+  timeNote.textContent = 'SILAHKAN START ULANG, CLICK START';
   liveExpireNote.textContent = '';
   progressFill.style.width = '0%';
   copyBtn.classList.remove('blink');
