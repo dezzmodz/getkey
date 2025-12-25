@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>Generator KEY+FILE</title>
+<title>Generator KEY/FILE</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -156,9 +156,58 @@
   filter: drop-shadow(0 4px 10px rgba(0,255,150,0.35));
   border: 2px solid rgba(0,255,150,0.8);
 }
+<style>
+:root{
+  --bg1:#0b1116;
+  --bg2:#0f1a21;
+  --accent:#7dff7d;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background: linear-gradient(
+    120deg,
+    var(--bg1),
+    var(--bg2),
+    var(--accent)
+  );
+  background-size:300% 300%;
+  animation:bgMove 20s ease infinite;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+#statusBox{
+  position: fixed;
+  top: 785px;
+  right: 10px;
+  z-index: 9999;
+  font-family: monospace;
+  font-size: 13px;
+  color: #00ffcc;
+  background: rgba(0,0,0,0.6);
+  padding: 6px 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #00ffcc;
+}
+
 </style>
 </head>
 <body>
+
+<div id="statusBox">
+  FPS: <span id="fps">0</span><br>
+  Signal: <span id="signal">—</span><br>
+  Battery: <span id="battery">—</span><br>
+  User: <span id="userStatus">—</span>
+</div>
 
   <!-- NEON CLOCK TOP RIGHT -->
   <div id="clockTopWrap">
@@ -177,7 +226,7 @@
       </div>
 
         <p class="small">
-         KEY TERDAFTAR: ⪼⪼  PK  ᯓTIDAK TERDAFTAR:<strong><span class="neon-strike">GOD MODS+GRINGO+MK+RUSH+THE KING OFC+YSM</span></strong>. Tekan <em>START</em> untuk generate.
+         KEY TERDAFTAR: ⪼⪼  ---  ᯓTIDAK TERDAFTAR:<strong><span class="neon-strike">GOD MODS+GRINGO+MK+RUSH+THE KING OFC+YSM+PK</span></strong>. Tekan <em>START</em> untuk generate.
         </p>
 
         <div id="keyDisplay" class="key-display">
@@ -241,7 +290,7 @@
 
         <div class="admin-note">𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎....☕ INI ADALAH WEB GET KEY+FIES 
         KALIAN BISA GET KEY DAN DAPATKAN KEY RANDOM, PIN LOJIN SILHKAN DM (TELEGRAM: @dezzmods/ TIKTOK: @dezz_realmods</div>
-        <div style="position:fixed;top:1000px;left:100px;z-index:200;padding:5px 8px;class="admin-note">©WEB RESMI 𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎</div>
+        <div class="admin-note" style="position:fixed;top:1000px;left:100px;z-index:200;padding:5px 8px;">©WEB RESMI 𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎</div>
 
       <!-- Musik login -->
 <audio id="loginMusic" loop></audio>
@@ -251,7 +300,8 @@ const loginMusics = [
   "https://files.catbox.moe/0jr72e.mp3",
   "https://files.catbox.moe/2ntgsx.mp3",
   "https://files.catbox.moe/ip7i35.mp3", 
-  "https://files.catbox.moe/rxesmk.mp3"
+  "https://files.catbox.moe/rxesmk.mp3", 
+  "https://files.catbox.moe/1pl2c5.mp3"
 ];
 
 // Ambil elemen audio
@@ -260,9 +310,6 @@ const audio = document.getElementById('loginMusic');
 // Pilih musik random
 const randomIndex = Math.floor(Math.random() * loginMusics.length);
 audio.src = loginMusics[randomIndex];
-
-// Putar otomatis saat login
-audio.play().catch(err => console.log("Autoplay blocked:", err));
 </script>
 
 <div id="musicPopup" style="
@@ -296,6 +343,10 @@ audio.play().catch(err => console.log("Autoplay blocked:", err));
           <div class="login-note small">PASSWORD 𝐃𝐌 𝐓𝐈𝐊𝐓𝐎𝐊:@dezz_realmods</div>
         </div>
       </div>
+      
+      <div style="margin-top:12px">
+  <input id="userInput" class="glass-input" type="text" placeholder="MASUKKAN USERNAME" />
+</div>
 
       <div style="margin-top:12px">
         <input id="pinInput" class="glass-input" type="password" placeholder="MASUKAN PASSWORD" />
@@ -334,7 +385,12 @@ audio.play().catch(err => console.log("Autoplay blocked:", err));
 
 <script>
 /* ========== Simple config ========== */
-const VALID_PINS = ["GiveMember","FamilyCHDezZ","Dezz"];
+const VALID_USERS = [
+  { user: "Dezz", pass: "Dezz1" },
+  { user: "Dezz", pass: "Dezzmods" },
+  { user: "Dezz", pass: "FamilyCH" },
+  { user: "Dezz", pass: "123Dezz" }
+];
 const DURATION_SECONDS = 15; // 15 detik
 const KEYS_POOL = [
   "MAAF COBA ULANG KLICK START",
@@ -364,7 +420,7 @@ const KEYS_POOL = [
   "BADAN HS VVIP     https://sub4unlock.io/OJY35",
   "AIM SETINGS 99% ALL FF [ OB51 ]     https://sub4unlock.io/4sQfA",
   "GRAFIK_MINECRAFT_AAL_MAP    https://sub4unlock.io/yf4pa", 
-  "HeadsensiFresV2     https://sub4unlock.io/6EjKu",
+  "HeadsensiFresV2     https://sub4unlock.io/6EjKu PW:-headsensiv2",
   "GLOWAL MINI WALLHACK     https://sub4unlock.io/kMqIv", 
   "STAR ULANG 1 X LAGI!!!!", 
   "HOLOGRAM WEAPON RED     https://safefileku.com/download/OuDR5H24x8nxH7Up", 
@@ -376,14 +432,6 @@ const KEYS_POOL = [
  "AIMLOCK 98%      https://safefileku.com/download/H8o6YcmM8I07ifWC", 
  "AIMBOT      https://safefileku.com/download/5NFot09Lolx9VF3y", 
  "AIMBOT x FFMAX JILLY @ZyrlXit      https://safefileku.com/download/dXxHSRm5Wgt629X7", 
- "PK_FREE_PBuJzkcEwO",
- "PK_FREE_2EPzcKv7b5",
- "PK_FREE_QsjK4R7MvF",
- "PK_FREE_owKfmarzRB",
- "PK_FREE_qtOjHzCTdV",
- "PK_FREE_VmepULh43a",
- "PK_FREE_tUyr8opwcd", 
-  "PK_FREE_i9XAEM7xSa", 
   "SENSIX BETA     https://safefileku.com/download/BnnCvuL6P266rd3P PW:-HENPEEXAUTH20", 
   "AIMLOCKxTEMBUSGLOWALAixkoo     https://sub4unlock.io/FRcyJ   PW:-AIXKOO GACOR"
 ];
@@ -396,6 +444,7 @@ const BAN_DURATION_MS = 5*60*1000; // 5 menit
 /* ========== Elements ========== */
 const loginOverlay = document.getElementById('loginOverlay');
 const pinInput = document.getElementById('pinInput');
+const userInput = document.getElementById('userInput');
 const pinSubmit = document.getElementById('pinSubmit');
 const pinCancel = document.getElementById('pinCancel');
 const loginMsg = document.getElementById('loginMsg');
@@ -425,6 +474,81 @@ const clockBottom = document.getElementById('clockNeonBottom');
 let lastKey = "";
 let expiryAt = 0;
 let countdownInterval = null;
+
+/* ===== FPS ===== */
+let lastTime = performance.now();
+let frames = 0;
+
+function updateFPS(now){
+  frames++;
+  if(now - lastTime >= 1000){
+    document.getElementById('fps').textContent = frames;
+    frames = 0;
+    lastTime = now;
+  }
+  requestAnimationFrame(updateFPS);
+}
+requestAnimationFrame(updateFPS);
+
+
+/* ===== SIGNAL ===== */
+const signalEl = document.getElementById('signal');
+
+function updateSignal(){
+  if(navigator.onLine){
+    signalEl.textContent = 'Online';
+    signalEl.style.color = '#7dff7d';
+  }else{
+    signalEl.textContent = 'Offline';
+    signalEl.style.color = '#ff6b6b';
+  }
+}
+window.addEventListener('online', updateSignal);
+window.addEventListener('offline', updateSignal);
+updateSignal();
+
+
+/* ===== BATTERY ===== */
+const batteryEl = document.getElementById('battery');
+
+if(navigator.getBattery){
+  navigator.getBattery().then(battery => {
+
+    function updateBattery(){
+      const level = Math.round(battery.level * 100);
+      const charging = battery.charging ? ' ⚡' : '';
+      batteryEl.textContent = level + '%' + charging;
+
+      if(level <= 20){
+        batteryEl.style.color = '#ff6b6b';
+      }else if(level <= 50){
+        batteryEl.style.color = '#facf5a';
+      }else{
+        batteryEl.style.color = '#7dff7d';
+      }
+    }
+
+    updateBattery();
+    battery.addEventListener('levelchange', updateBattery);
+    battery.addEventListener('chargingchange', updateBattery);
+  });
+}else{
+  batteryEl.textContent = 'N/A';
+}
+/* ===== Unser ===== */
+const userStatusEl = document.getElementById('userStatus');
+
+function updateUserStatus(){
+  if(typeof isAuthorized === 'function' && isAuthorized()){
+    userStatusEl.textContent = 'Login';
+    userStatusEl.style.color = '#7dff7d';
+  }else{
+    userStatusEl.textContent = 'Guest';
+    userStatusEl.style.color = '#facf5a';
+  }
+}
+
+updateUserStatus();
 
 /* =========================
    DEVICE FINGERPRINT (simple, deterministic)
@@ -490,7 +614,8 @@ function setAuthorized(flag){
 setAuthorized(isAuthorized());
 
 pinSubmit.addEventListener('click', ()=> {
-  const v = (pinInput.value||'').trim();
+  const username = (userInput.value || '').trim();
+  const v = (pinInput.value || '').trim();
   const fp = deviceFingerprint();
 
   if(isDeviceBanned(fp)){
@@ -500,14 +625,21 @@ pinSubmit.addEventListener('click', ()=> {
     return;
   }
 
-  if(!v){
-    loginMsg.style.display = 'block';
-    loginMsg.textContent='Masukkan PIN';
-    return;
-  }
+  if(!username || !v){
+  loginMsg.style.display = 'block';
+  loginMsg.textContent = 'Username dan Password wajib diisi';
+  return;
+}
 
-  if(VALID_PINS.includes(v)){
+  const valid = VALID_USERS.some(u =>
+  u.user === username && u.pass === v
+);
+
+if(valid){
+  userInput.value = '';
+pinInput.value  = '';
     setAuthorized(true);
+    updateUserStatus(); // 👈 TAMBAHKAN INI
     loginMsg.style.display='none';
     localStorage.removeItem(getBadKeyName(fp));
 
@@ -550,7 +682,12 @@ music.play().then(() => {
     }
   }
 });  
-pinCancel.addEventListener('click', ()=>{ loginOverlay.style.display='none'; });
+pinCancel.addEventListener('click', ()=>{
+  if(!isAuthorized()){
+    loginMsg.style.display = 'block';
+    loginMsg.textContent = 'Login diperlukan';
+  }
+});
 logoutBtn.addEventListener('click', ()=> setAuthorized(false));
 
 /* =========================
@@ -574,6 +711,18 @@ const THEMES = [
   { bg1:'#232526', bg2:'#414345', accent:'#cfcfcf' },   // metal chrome
   { bg1:'#F21AFF', bg2:'#3CFFD9', accent:'#64FF35' },   // 𝘿𝙚𝙯𝙕✘𝙈𝙊𝘿𝙎
 ];
+
+function applyTheme(index){
+  const t = THEMES[index];
+  if(!t) return;
+
+  document.documentElement.style.setProperty('--bg1', t.bg1);
+  document.documentElement.style.setProperty('--bg2', t.bg2);
+  document.documentElement.style.setProperty('--accent', t.accent);
+
+  localStorage.setItem('themeIndex', index);
+}
+applyTheme(THEMES.length - 1);
 
 function applyTheme(theme){
   document.body.style.background = `linear-gradient(135deg, ${theme.bg1}, ${theme.bg2})`;
@@ -601,12 +750,6 @@ window.addEventListener('load', ()=>{
 /* =========================
    EXPIRY / UI helpers
 */
-function formatTimeLeft(sec){
-  const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60;
-  if(h>0) return `${h}h ${m}m ${s}s`;
-  if(m>0) return `${m}m ${s}s`;
-  return `${s}s`;
-}
 
 /* ========== Expiry / countdown handling ========== */
 function startLocalExpiry(seconds){
