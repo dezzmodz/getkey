@@ -198,25 +198,47 @@ body::before{
   box-shadow: 0 0 10px #00ffcc;
 }
 
-#cardContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.card-side{
+  display:flex;
+  gap:12px;
+  background:rgba(0,0,0,0.5);
+  padding:12px;
+  border-radius:12px;
+  align-items:center;
 }
 
-.card-side {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  background: rgba(0,0,0,0.3);
-  padding: 10px;
-  border-radius: 10px;
+.card-img{
+  width:90px;
+  border-radius:10px;
 }
 
-.card-img {
-  width: 120px;
-  height: auto;
-  border-radius: 8px;
+.card-text h3{
+  margin:0;
+  font-size:15px;
+}
+
+.card-text p{
+  margin:4px 0 8px;
+  font-size:13px;
+  opacity:0.9;
+}
+
+.card-btn{
+  display:inline-block;
+  padding:6px 12px;
+  font-size:12px;
+  font-weight:700;
+  border-radius:8px;
+  background:#7dff7d;
+  color:#000;
+  text-decoration:none;
+  box-shadow:0 0 12px rgba(125,255,125,0.6);
+  transition:0.2s;
+}
+
+.card-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(125,255,125,0.9);
 }
 
 .card-text h3 { margin:0 0 6px 0; font-size:16px; color: #7dff7d; }
@@ -341,8 +363,20 @@ body::before{
 
 <script>
 const items = [
-  { img: "https://files.catbox.moe/l5b6dt.jpg", title: "YG MAU DM YA", desc: "DM Tele:@dezzmods" },
- // Tambah gambar sebanyak yang kamu mau
+  {
+    img: "https://files.catbox.moe/l5b6dt.jpg",
+    title: "YG MAU DM YA",
+    desc: "DM Tele:@dezzmods",
+    link: "https://t.me/dezzmods",
+    btnText: "DM SEKARANG"
+  },
+  {
+    img: "https://files.catbox.moe/dg0ze5.jpg",
+    title: "HOLO ORANGE",
+    desc: "KLAIM DI BAWAH",
+    link: "https://sub4unlock.io/CIhcL",
+    btnText: "KLAIM"
+  }
 ];
 
 const container = document.getElementById('cardContainer');
@@ -355,6 +389,9 @@ items.forEach(item => {
     <div class="card-text">
       <h3>${item.title}</h3>
       <p>${item.desc}</p>
+      <a href="${item.link}" target="_blank" class="card-btn">
+        ${item.btnText || 'BUKA'}
+      </a>
     </div>
   `;
   container.appendChild(card);
